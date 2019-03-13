@@ -1,4 +1,4 @@
-U8 BW_Monotonically_Inc_Chk(BW_BarCode *GenericBarCode,U8 DATA_OFFSET){
+U8 BW_Monotonically_Inc_Chk(BarCode *GenericBarCode,U8 DATA_OFFSET){
 	U8 Index = 0U;
 	U8 Monotonically_Inc_Cnt = 0U;
 	U8 Monotonically_Inc_Chk_Flag = 0U;
