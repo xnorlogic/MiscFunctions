@@ -13,7 +13,7 @@
 /*scale factor*/
 #define DATA_SCALE_FACTOR 		0.1f
 /*fixed for a pay-load data type of U16*/
-#define PAYLOAD_SIZE 			106U / 2U
+#define PAYLOAD_SIZE 			53U
 /*SN fixed*/
 #define SERIAL_NUMBER_SIZE 		17U
 
