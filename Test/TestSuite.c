@@ -4,6 +4,9 @@
 #define CHECKSUM_SIZE  6U
 #define CHECKSUM_DATA_INDEX  CHECKSUM_SIZE - 1U
 
+#define MONOTONIC_CHK_PASS_ID  3U
+#define CHECKSUM_CHK_PASS_ID  4U
+
 BarCode GenericBarCode = {
 	0U, /*SID*/
 	0U, /*HID*/
@@ -75,17 +78,20 @@ unsigned char MonotonicTest(void){
 
 	MonotonicData = Monotonically_Inc_Chk(&GenericBarCode,0) + MonotonicData;
 
-	return (MonotonicData == 3U);
+	/*Test suite pass if and only if the monotonic checks match the MONOTONIC_CHK_PASS_ID*/
+	/*3 monotinic data set and 2 non monotonic data sets*/
+	/*TBD... cross check agains the Test ID Spec*/
+	return (MonotonicData == MONOTONIC_CHK_PASS_ID);
 }
 
 unsigned char ChecksumTest(void){
 	unsigned char CheckSumCheck = 0;
 
-	unsigned char data0[CHECKSUM_SIZE]={0x10,0x11,0x12,0x13,0x14,0xa6};
-	unsigned char data1[CHECKSUM_SIZE]={0x14,0x12,0x10,0x11,0x14,0xa5};
-	unsigned char data2[CHECKSUM_SIZE]={0x14,0x14,0x14,0x12,0x12,0xa0};
-	unsigned char data3[CHECKSUM_SIZE]={0x10,0x10,0x10,0x10,0x10,0xb0};
-	unsigned char data4[CHECKSUM_SIZE]={0xaa,0xab,0xbb,0x12,0x12,0xa6};
+	unsigned char data0[CHECKSUM_SIZE]={0x10,0x11,0x12,0x13,0x14,0xa6}; /*OK Checksum*/
+	unsigned char data1[CHECKSUM_SIZE]={0x14,0x12,0x10,0x11,0x14,0xa5}; /*OK Checksum*/
+	unsigned char data2[CHECKSUM_SIZE]={0x14,0x14,0x14,0x12,0x12,0xa0}; /*OK Checksum*/
+	unsigned char data3[CHECKSUM_SIZE]={0x10,0x10,0x10,0x10,0x10,0xb0}; /*OK Checksum*/
+	unsigned char data4[CHECKSUM_SIZE]={0xaa,0xab,0xbb,0x12,0x12,0xa6}; /*Checksum in the data array incorrect*/
 
 	CheckSumCheck = CheckSum_Calculator((unsigned char*)&data0,sizeof(data0)) == data0[CHECKSUM_DATA_INDEX];
 	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data1,sizeof(data0)) == data1[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
@@ -93,5 +99,8 @@ unsigned char ChecksumTest(void){
 	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data3,sizeof(data0)) == data3[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
 	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data4,sizeof(data0)) == data4[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
 
-	return (CheckSumCheck == 4U);
+	/*Test suite pass if and only if the checksum checks match the CHECKSUM_CHK_PASS_ID*/
+	/*4 arrays with matching checksum, 1 array with no match on the checksum*/
+	/*TBD... cross check agains the Test ID Spec*/
+	return (CheckSumCheck == CHECKSUM_CHK_PASS_ID);
 }
