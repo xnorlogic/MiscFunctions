@@ -1,13 +1,16 @@
 cls
 echo off
+rem Compile and build
 gcc -c ..\Checks\MonotonicCheck.c -I ..\Checks  -o MonotonicCheck.o
 gcc -c ..\Checks\CheckSumCalc.c -I ..\Checks -o CheckSumCalc.o
 gcc -c ..\Test\TestSuite.c -I ..\Checks -o TestSuite.o
 gcc TestSuite.o MonotonicCheck.o CheckSumCalc.o -o TestApp.exe
 @echo Build Complete
+rem cleanup
 rm TestSuite.o
 rm MonotonicCheck.o
 rm CheckSumCalc.o
+rem Test App execution
 @echo Perform Tests
 rem Run the executable
 TestApp.exe
