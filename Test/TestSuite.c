@@ -17,17 +17,19 @@ BarCode GenericBarCode = {
 	0U,/*Checksum*/
 };
 
-void MonotonicTest(void);
-void ChecksumTest(void);
+unsigned char MonotonicTest(void);
+unsigned char ChecksumTest(void);
 
 int main(void){
-	MonotonicTest();
-	ChecksumTest();
-  return 0;
+	unsigned char MasterCheck = 0U;
+
+	MasterCheck = MonotonicTest() && ChecksumTest();
+
+	return !MasterCheck;
 }
 
-void MonotonicTest(void){
-	unsigned char MonotonicDataFlag = 0;
+unsigned char MonotonicTest(void){
+	unsigned char MonotonicData = 0;
 
 	/*Test 1 monotonic*/
 	GenericBarCode.Data[0]=0;
@@ -36,9 +38,7 @@ void MonotonicTest(void){
 	GenericBarCode.Data[3]=3;
 	GenericBarCode.Data[4]=4;
 
-	MonotonicDataFlag = Monotonically_Inc_Chk(&GenericBarCode,0);
-
-	printf("%d",MonotonicDataFlag);
+	MonotonicData = Monotonically_Inc_Chk(&GenericBarCode,0);
 
 	/*Test 2 no monotonic*/
 	GenericBarCode.Data[0]=0;
@@ -47,9 +47,7 @@ void MonotonicTest(void){
 	GenericBarCode.Data[3]=4;
 	GenericBarCode.Data[4]=3;
 
-	MonotonicDataFlag = Monotonically_Inc_Chk(&GenericBarCode,0);
-
-	printf("%d",MonotonicDataFlag);
+	MonotonicData = Monotonically_Inc_Chk(&GenericBarCode,0) + MonotonicData;
 
 	/*Test 3 monotonic*/
 	GenericBarCode.Data[0]=0;
@@ -58,9 +56,7 @@ void MonotonicTest(void){
 	GenericBarCode.Data[3]=4;
 	GenericBarCode.Data[4]=4;
 
-	MonotonicDataFlag = Monotonically_Inc_Chk(&GenericBarCode,0);
-
-	printf("%d",MonotonicDataFlag);
+	MonotonicData = Monotonically_Inc_Chk(&GenericBarCode,0) + MonotonicData;
 
 	/*Test 4 no monotonic*/
 	GenericBarCode.Data[0]=0;
@@ -69,9 +65,7 @@ void MonotonicTest(void){
 	GenericBarCode.Data[3]=5;
 	GenericBarCode.Data[4]=4;
 
-	MonotonicDataFlag = Monotonically_Inc_Chk(&GenericBarCode,0);
-
-	printf("%d",MonotonicDataFlag);
+	MonotonicData = Monotonically_Inc_Chk(&GenericBarCode,0) + MonotonicData;
 
 	/*Test 5 monotonic*/
 	GenericBarCode.Data[0]=1;
@@ -80,22 +74,25 @@ void MonotonicTest(void){
 	GenericBarCode.Data[3]=1;
 	GenericBarCode.Data[4]=1;
 
-	MonotonicDataFlag = Monotonically_Inc_Chk(&GenericBarCode,0);
+	MonotonicData = Monotonically_Inc_Chk(&GenericBarCode,0) + MonotonicData;
 
-	printf("%d",MonotonicDataFlag);
-
+	return (MonotonicData == 3U);
 }
 
-void ChecksumTest(void){
+unsigned char ChecksumTest(void){
+	unsigned char CheckSumCheck = 0;
+
 	unsigned char data0[CHECKSUM_SIZE]={0x10,0x11,0x12,0x13,0x14,0xa6};
 	unsigned char data1[CHECKSUM_SIZE]={0x14,0x12,0x10,0x11,0x14,0xa5};
 	unsigned char data2[CHECKSUM_SIZE]={0x14,0x14,0x14,0x12,0x12,0xa0};
 	unsigned char data3[CHECKSUM_SIZE]={0x10,0x10,0x10,0x10,0x10,0xb0};
 	unsigned char data4[CHECKSUM_SIZE]={0xaa,0xab,0xbb,0x12,0x12,0xa6};
 
-	printf("\n%d",CheckSum_Calculator((unsigned char*)&data0,sizeof(data0)) == data0[CHECKSUM_DATA_INDEX]);
-	printf("%d",CheckSum_Calculator((unsigned char*)&data1,sizeof(data1)) == data1[CHECKSUM_DATA_INDEX]);
-	printf("%d",CheckSum_Calculator((unsigned char*)&data2,sizeof(data2)) == data2[CHECKSUM_DATA_INDEX]);
-	printf("%d",CheckSum_Calculator((unsigned char*)&data3,sizeof(data3)) == data3[CHECKSUM_DATA_INDEX]);
-	printf("%d",CheckSum_Calculator((unsigned char*)&data4,sizeof(data4)) == data4[CHECKSUM_DATA_INDEX]);
+	CheckSumCheck = CheckSum_Calculator((unsigned char*)&data0,sizeof(data0)) == data0[CHECKSUM_DATA_INDEX];
+	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data1,sizeof(data0)) == data1[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data2,sizeof(data0)) == data2[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data3,sizeof(data0)) == data3[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data4,sizeof(data0)) == data4[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+
+	return (CheckSumCheck == 4U);
 }
