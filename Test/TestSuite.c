@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "MonotonicCheck.h"
 #include "CheckSumCalc.h"
 
