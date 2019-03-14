@@ -2,22 +2,15 @@
 #include "MonotonicCheck.h"
 
 BarCode GenericBarCode = {
-	/* Supplier ID 		1   Byte  */
-	0U,
-	/* Hardware ID 		1   Byte  */
-	0U,
-	/* Format 			1   Byte  */
-	0U,
-	/* Serial Number 	17  Bytes */
-	{0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U},
-	/* Payload 			106 Bytes */
-	{0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,
+	0U, /*SID*/
+	0U, /*HID*/
+	0U, /*Format*/
+	{0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U}, /*SN*/
+	{0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,/*Data*/
 	 0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,0U,
 	 0U,0U,0U,0U,0U,0U,0U,0U,0U},
-	/* Padding 			1   Byte  */
-	0U,
-	/* Check Sum 		1   Byte  */
-	0U,
+	0U,/*Padding*/
+	0U,/*Checksum*/
 };
 
 void MonotonicTest(void);
