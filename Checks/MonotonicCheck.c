@@ -1,3 +1,5 @@
+#include "MonotonicCheck.h"
+
 unsigned char Monotonically_Inc_Chk(BarCode *GenericBarCode,unsigned char DATA_OFFSET){
 	unsigned char Index = 0U;
 	unsigned char MonotonicallyIncCnt = 0U;
