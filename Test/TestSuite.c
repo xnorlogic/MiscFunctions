@@ -2,6 +2,9 @@
 #include "MonotonicCheck.h"
 #include "CheckSumCalc.h"
 
+#define CHECKSUM_SIZE  6U
+#define CHECKSUM_DATA_INDEX  CHECKSUM_SIZE - 1U
+
 BarCode GenericBarCode = {
 	0U, /*SID*/
 	0U, /*HID*/
@@ -13,8 +16,6 @@ BarCode GenericBarCode = {
 	0U,/*Padding*/
 	0U,/*Checksum*/
 };
-
-#define CHECKSUM_SIZE 6U
 
 void MonotonicTest(void);
 void ChecksumTest(void);
@@ -92,9 +93,9 @@ void ChecksumTest(void){
 	unsigned char data3[CHECKSUM_SIZE]={0x10,0x10,0x10,0x10,0x10,0xb0};
 	unsigned char data4[CHECKSUM_SIZE]={0xaa,0xab,0xbb,0x12,0x12,0xa6};
 
-	printf("\n%d",CheckSum_Calculator((unsigned char*)&data0,CHECKSUM_SIZE) == data0[5]);
-	printf("%d",CheckSum_Calculator((unsigned char*)&data1,CHECKSUM_SIZE) == data1[5]);
-	printf("%d",CheckSum_Calculator((unsigned char*)&data2,CHECKSUM_SIZE) == data2[5]);
-	printf("%d",CheckSum_Calculator((unsigned char*)&data3,CHECKSUM_SIZE) == data3[5]);
-	printf("%d",CheckSum_Calculator((unsigned char*)&data4,CHECKSUM_SIZE) == data4[5]);
+	printf("\n%d",CheckSum_Calculator((unsigned char*)&data0,sizeof(data0)) == data0[CHECKSUM_DATA_INDEX]);
+	printf("%d",CheckSum_Calculator((unsigned char*)&data1,sizeof(data1)) == data1[CHECKSUM_DATA_INDEX]);
+	printf("%d",CheckSum_Calculator((unsigned char*)&data2,sizeof(data2)) == data2[CHECKSUM_DATA_INDEX]);
+	printf("%d",CheckSum_Calculator((unsigned char*)&data3,sizeof(data3)) == data3[CHECKSUM_DATA_INDEX]);
+	printf("%d",CheckSum_Calculator((unsigned char*)&data4,sizeof(data4)) == data4[CHECKSUM_DATA_INDEX]);
 }
