@@ -20,7 +20,14 @@ BarCode GenericBarCode = {
 	0U,
 };
 
+void MonotonicTest(void);
+
 int main(void){
+	MonotonicTest();
+  return 0;
+}
+
+void MonotonicTest(void){
 	unsigned char MonotonicDataFlag = 0;
 
 	/*Test 1 monotonic*/
@@ -78,5 +85,4 @@ int main(void){
 
 	printf("%d",MonotonicDataFlag);
 
-  return 0;
 }
