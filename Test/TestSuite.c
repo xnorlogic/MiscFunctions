@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "MonotonicCheck.h"
+#include "CheckSumCalc.h"
 
 BarCode GenericBarCode = {
 	0U, /*SID*/
@@ -13,10 +14,15 @@ BarCode GenericBarCode = {
 	0U,/*Checksum*/
 };
 
+#define CHECKSUM_SIZE 6U
+
+unsigned char data[CHECKSUM_SIZE]={0x10,0x11,0x12,0x13,0x14,0xa6};
+
 void MonotonicTest(void);
 
 int main(void){
 	MonotonicTest();
+	printf("\n0x%x",CheckSum_Calculator((unsigned char*)&data,CHECKSUM_SIZE));
   return 0;
 }
 
