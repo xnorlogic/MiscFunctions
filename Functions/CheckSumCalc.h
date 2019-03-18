@@ -10,6 +10,7 @@
 
 #include "types.h"
 
-uint_8 CheckSum_Calculator(uint_8* data,uint_8 dataSize);
+uint_8 CheckSum_Calculator(uint_8* data);
+uint_8 CheckSum_chk(uint_8* data);
 
 #endif /* CHECKSUMCALC_H_ */
