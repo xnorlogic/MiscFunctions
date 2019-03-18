@@ -5,7 +5,7 @@
 #define CHECKSUM_DATA_INDEX  CHECKSUM_SIZE - 1U
 
 #define MONOTONIC_CHK_PASS_ID  3U
-#define CHECKSUM_CHK_PASS_ID 6U
+#define CHECKSUM_CHK_PASS_ID 4U
 
 BarCode GenericBarCode = {
 	0U, /*SID*/
@@ -107,8 +107,8 @@ uint_8 ChecksumTest(void){
 
 	/*Test suite pass if and only if the checksum checks match the CHECKSUM_CHK_PASS_ID*/
 	/*4 arrays with matching checksum, 1 array with no match on the checksum*/
-	/*1 array with all 0x00*/
-	/*1 array with all 0xff*/
+	/*1 array with all 0x00 this should not generate an OK checksum*/
+	/*1 array with all 0xff this should not generate an OK checksum*/
 	/*TBD... cross check against the Test ID Spec*/
 	return (CheckSumCheck == CHECKSUM_CHK_PASS_ID);
 }
