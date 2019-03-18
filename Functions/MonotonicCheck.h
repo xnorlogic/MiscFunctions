@@ -10,6 +10,6 @@
 
 #include "BarCode.h"
 
-unsigned char Monotonically_Inc_Chk(BarCode *GenericBarCode,unsigned char DATA_OFFSET);
+uint_8 Monotonically_Inc_Chk(BarCode *GenericBarCode,uint_8 DATA_OFFSET);
 
 #endif /* MONOTONICCHECK_H_ */

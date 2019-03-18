@@ -1,9 +1,9 @@
 #include "MonotonicCheck.h"
 
-unsigned char Monotonically_Inc_Chk(BarCode *GenericBarCode,unsigned char DATA_OFFSET){
-	unsigned char Index = 0U;
-	unsigned char MonotonicallyIncCnt = 0U;
-	unsigned char DataCheckSize = DATA_SIZE - 1U;
+uint_8 Monotonically_Inc_Chk(BarCode *GenericBarCode,uint_8 DATA_OFFSET){
+	uint_8 Index = 0U;
+	uint_8 MonotonicallyIncCnt = 0U;
+	uint_8 DataCheckSize = DATA_SIZE - 1U;
 	float buffer_1 = 0.0f;
 	float buffer_2 = 0.0f;
 

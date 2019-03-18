@@ -19,19 +19,19 @@ BarCode GenericBarCode = {
 	0U,/*Checksum*/
 };
 
-unsigned char MonotonicTest(void);
-unsigned char ChecksumTest(void);
+uint_8 MonotonicTest(void);
+uint_8 ChecksumTest(void);
 
 int main(void){
-	unsigned char MasterCheck = 0U;
+	uint_8 MasterCheck = 0U;
 
 	MasterCheck = MonotonicTest() && ChecksumTest();
 
 	return !MasterCheck;
 }
 
-unsigned char MonotonicTest(void){
-	unsigned char MonotonicData = 0;
+uint_8 MonotonicTest(void){
+	uint_8 MonotonicData = 0;
 
 	/*Test 1 monotonic*/
 	GenericBarCode.Data[0]=0;
@@ -84,20 +84,20 @@ unsigned char MonotonicTest(void){
 	return (MonotonicData == MONOTONIC_CHK_PASS_ID);
 }
 
-unsigned char ChecksumTest(void){
-	unsigned char CheckSumCheck = 0;
+uint_8 ChecksumTest(void){
+	uint_8 CheckSumCheck = 0;
 
-	unsigned char data0[CHECKSUM_SIZE]={0x10,0x11,0x12,0x13,0x14,0xa6}; /*OK Checksum*/
-	unsigned char data1[CHECKSUM_SIZE]={0x14,0x12,0x10,0x11,0x14,0xa5}; /*OK Checksum*/
-	unsigned char data2[CHECKSUM_SIZE]={0x14,0x14,0x14,0x12,0x12,0xa0}; /*OK Checksum*/
-	unsigned char data3[CHECKSUM_SIZE]={0x10,0x10,0x10,0x10,0x10,0xb0}; /*OK Checksum*/
-	unsigned char data4[CHECKSUM_SIZE]={0xaa,0xab,0xbb,0x12,0x12,0xa6}; /*Checksum in the data array incorrect*/
+	uint_8 data0[CHECKSUM_SIZE]={0x10,0x11,0x12,0x13,0x14,0xa6}; /*OK Checksum*/
+	uint_8 data1[CHECKSUM_SIZE]={0x14,0x12,0x10,0x11,0x14,0xa5}; /*OK Checksum*/
+	uint_8 data2[CHECKSUM_SIZE]={0x14,0x14,0x14,0x12,0x12,0xa0}; /*OK Checksum*/
+	uint_8 data3[CHECKSUM_SIZE]={0x10,0x10,0x10,0x10,0x10,0xb0}; /*OK Checksum*/
+	uint_8 data4[CHECKSUM_SIZE]={0xaa,0xab,0xbb,0x12,0x12,0xa6}; /*Checksum in the data array incorrect*/
 
-	CheckSumCheck = CheckSum_Calculator((unsigned char*)&data0,sizeof(data0)) == data0[CHECKSUM_DATA_INDEX];
-	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data1,sizeof(data0)) == data1[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
-	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data2,sizeof(data0)) == data2[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
-	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data3,sizeof(data0)) == data3[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
-	CheckSumCheck = (CheckSum_Calculator((unsigned char*)&data4,sizeof(data0)) == data4[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+	CheckSumCheck = CheckSum_Calculator((uint_8*)&data0,sizeof(data0)) == data0[CHECKSUM_DATA_INDEX];
+	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data1,sizeof(data0)) == data1[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data2,sizeof(data0)) == data2[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data3,sizeof(data0)) == data3[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data4,sizeof(data0)) == data4[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
 
 	/*Test suite pass if and only if the checksum checks match the CHECKSUM_CHK_PASS_ID*/
 	/*4 arrays with matching checksum, 1 array with no match on the checksum*/

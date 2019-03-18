@@ -5,11 +5,13 @@
  *      Author: androdrigue2
  */
 
-unsigned char CheckSum_Calculator(unsigned char* data,unsigned char dataSize){
+#include "CheckSumCalc.h"
+
+uint_8 CheckSum_Calculator(uint_8* data,uint_8 dataSize){
 	/* Check Sum accumulator */
-	unsigned char CheckSUM_calc = 0U;
-	unsigned char Index 	    = 0U;
-	unsigned char BYTE_ELEMENT  = 0U;
+	uint_8 CheckSUM_calc = 0U;
+	uint_8 Index 	    = 0U;
+	uint_8 BYTE_ELEMENT  = 0U;
 	/*prevent a crash from a NULL pointer*/
 	if (data != 0) {
 		for (Index = 0U ; Index < dataSize - 1 ; Index++){

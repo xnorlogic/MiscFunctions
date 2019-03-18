@@ -8,6 +8,8 @@
 #ifndef BARCODE_H_
 #define BARCODE_H_
 
+#include "types.h"
+
 /*application specific Data size*/
 #define DATA_SIZE             5U
 /*scale factor*/
@@ -18,13 +20,13 @@
 #define SERIAL_NUMBER_SIZE    17U
 /*Bar code size is 128 bytes*/
 typedef struct{
-	unsigned char  S_ID;
-	unsigned char  H_ID;
-	unsigned char  Format;
-	unsigned char  SN[SERIAL_NUMBER_SIZE];
-	unsigned short int Data[PAYLOAD_SIZE];
-	unsigned char  Padding;
-	unsigned char  CheckSum;
+	uint_8  S_ID;
+	uint_8  H_ID;
+	uint_8  Format;
+	uint_8  SN[SERIAL_NUMBER_SIZE];
+	uint_16 Data[PAYLOAD_SIZE];
+	uint_8  Padding;
+	uint_8  CheckSum;
 }BarCode;
 
 #endif /* BARCODE_H_ */

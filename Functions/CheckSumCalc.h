@@ -8,6 +8,8 @@
 #ifndef CHECKSUMCALC_H_
 #define CHECKSUMCALC_H_
 
-unsigned char CheckSum_Calculator(unsigned char* data,unsigned char dataSize);
+#include "types.h"
+
+uint_8 CheckSum_Calculator(uint_8* data,uint_8 dataSize);
 
 #endif /* CHECKSUMCALC_H_ */

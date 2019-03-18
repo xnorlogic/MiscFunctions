@@ -1,9 +1,9 @@
 cls
 echo off
 rem Compile and build
-gcc -c ..\Functions\MonotonicCheck.c -I ..\Functions  -o MonotonicCheck.o
-gcc -c ..\Functions\CheckSumCalc.c -I ..\Functions -o CheckSumCalc.o
-gcc -c ..\Test\TestSuite.c -I ..\Functions -o TestSuite.o
+gcc -c ..\Functions\MonotonicCheck.c -I ..\Functions -I ..\Platform -o MonotonicCheck.o
+gcc -c ..\Functions\CheckSumCalc.c -I ..\Functions -I ..\Platform -o CheckSumCalc.o
+gcc -c ..\Test\TestSuite.c -I ..\Functions -I ..\Platform -o TestSuite.o
 gcc TestSuite.o MonotonicCheck.o CheckSumCalc.o -o TestApp.exe
 @echo Build Complete
 rem cleanup
