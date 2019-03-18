@@ -1,10 +1,16 @@
 cls
 echo off
+echo Test Suite for MiscFunctions has started...
+SET APPLICATION_NAME=TestApp
+SET FUNCTIONS_PATH=..\Functions
+SET PLATFORM_PATH=..\Platform
+SET TEST_PATH=..\Test
+SET OBJECT_FILES=TestSuite.o MonotonicCheck.o CheckSumCalc.o
 rem Compile and build
-gcc -c ..\Functions\MonotonicCheck.c -I ..\Functions -I ..\Platform -o MonotonicCheck.o
-gcc -c ..\Functions\CheckSumCalc.c -I ..\Functions -I ..\Platform -o CheckSumCalc.o
-gcc -c ..\Test\TestSuite.c -I ..\Functions -I ..\Platform -o TestSuite.o
-gcc TestSuite.o MonotonicCheck.o CheckSumCalc.o -o TestApp.exe
+gcc -c %FUNCTIONS_PATH%\MonotonicCheck.c -I %FUNCTIONS_PATH% -I %PLATFORM_PATH% -o MonotonicCheck.o
+gcc -c %FUNCTIONS_PATH%\CheckSumCalc.c -I %FUNCTIONS_PATH% -I %PLATFORM_PATH% -o CheckSumCalc.o
+gcc -c %TEST_PATH%\TestSuite.c -I %FUNCTIONS_PATH% -I %PLATFORM_PATH% -o TestSuite.o
+gcc %OBJECT_FILES% -o %APPLICATION_NAME%.exe
 @echo Build Complete
 rem cleanup
 rm TestSuite.o
@@ -13,7 +19,7 @@ rm CheckSumCalc.o
 rem Test App execution
 @echo Perform Tests
 rem Run the executable
-TestApp.exe
+%APPLICATION_NAME%.exe
 echo off
 rem check for the test results
 IF %ERRORLEVEL% == 0 ( 
