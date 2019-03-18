@@ -5,7 +5,7 @@
 #define CHECKSUM_DATA_INDEX  CHECKSUM_SIZE - 1U
 
 #define MONOTONIC_CHK_PASS_ID  3U
-#define CHECKSUM_CHK_PASS_ID  4U
+#define CHECKSUM_CHK_PASS_ID 6U
 
 BarCode GenericBarCode = {
 	0U, /*SID*/
@@ -93,14 +93,22 @@ uint_8 ChecksumTest(void){
 	uint_8 data3[CHECKSUM_SIZE]={0x10,0x10,0x10,0x10,0x10,0xb0}; /*OK Checksum*/
 	uint_8 data4[CHECKSUM_SIZE]={0xaa,0xab,0xbb,0x12,0x12,0xa6}; /*Checksum in the data array incorrect*/
 
+	uint_8 data5[CHECKSUM_SIZE]={0x00,0x00,0x00,0x00,0x00,0x00}; /*all 0x00 data array*/
+	uint_8 data6[CHECKSUM_SIZE]={0xff,0xff,0xff,0xff,0xff,0x05}; /*all 0xff data array*/
+
 	CheckSumCheck = CheckSum_Calculator((uint_8*)&data0,sizeof(data0)) == data0[CHECKSUM_DATA_INDEX];
 	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data1,sizeof(data0)) == data1[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
 	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data2,sizeof(data0)) == data2[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
 	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data3,sizeof(data0)) == data3[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
 	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data4,sizeof(data0)) == data4[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
 
+	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data5,sizeof(data0)) == data5[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+	CheckSumCheck = (CheckSum_Calculator((uint_8*)&data6,sizeof(data0)) == data6[CHECKSUM_DATA_INDEX]) + CheckSumCheck;
+
 	/*Test suite pass if and only if the checksum checks match the CHECKSUM_CHK_PASS_ID*/
 	/*4 arrays with matching checksum, 1 array with no match on the checksum*/
-	/*TBD... cross check agains the Test ID Spec*/
+	/*1 array with all 0x00*/
+	/*1 array with all 0xff*/
+	/*TBD... cross check against the Test ID Spec*/
 	return (CheckSumCheck == CHECKSUM_CHK_PASS_ID);
 }
