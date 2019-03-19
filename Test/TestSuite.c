@@ -1,11 +1,13 @@
 #include "MonotonicCheck.h"
 #include "CheckSumCalc.h"
+#include "Sort.h"
 
 #define CHECKSUM_SIZE  6U
 #define CHECKSUM_DATA_INDEX  CHECKSUM_SIZE - 1U
 
 #define MONOTONIC_CHK_PASS_ID  3U
 #define CHECKSUM_CHK_PASS_ID 4U
+#define SORT_CHK_PASS_ID 5U
 
 BarCode GenericBarCode = {
 	0U, /*SID*/
@@ -21,11 +23,12 @@ BarCode GenericBarCode = {
 
 uint_8 MonotonicTest(void);
 uint_8 ChecksumTest(void);
+uint_8 SortTest_A(void);
 
 int main(void){
 	uint_8 MasterCheck = 0U;
 
-	MasterCheck = MonotonicTest() && ChecksumTest();
+	MasterCheck = MonotonicTest() && ChecksumTest() && SortTest_A();
 
 	return !MasterCheck;
 }
@@ -111,4 +114,36 @@ uint_8 ChecksumTest(void){
 	/*1 array with all 0xff this should not generate an OK checksum*/
 	/*TBD... cross check against the Test ID Spec*/
 	return (CheckSumCheck == CHECKSUM_CHK_PASS_ID);
+}
+
+uint_8 SortTest_A(void){
+	uint_8 SortCheck = 0;
+
+	uint_8 data0[6]={5,7,4,9,9,1};
+	uint_8 data1[6]={5,5,4,6,9,2};
+	uint_8 data2[6]={4,7,4,9,9,1};
+	uint_8 data3[6]={2,7,6,7,9,0};
+	uint_8 data4[6]={5,6,6,6,6,1};
+
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data0,sizeof(data0)) + SortCheck;
+	Bubble_Sort((uint_8*)&data0,sizeof(data0));
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data0,sizeof(data0)) + SortCheck;
+
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data1,sizeof(data1)) + SortCheck;
+	Bubble_Sort((uint_8*)&data1,sizeof(data1));
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data1,sizeof(data1)) + SortCheck;
+
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data2,sizeof(data2)) + SortCheck;
+	Bubble_Sort((uint_8*)&data2,sizeof(data2));
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data2,sizeof(data2)) + SortCheck;
+
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data3,sizeof(data3)) + SortCheck;
+	Bubble_Sort((uint_8*)&data3,sizeof(data3));
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data3,sizeof(data3)) + SortCheck;
+
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data4,sizeof(data4)) + SortCheck;
+	Bubble_Sort((uint_8*)&data4,sizeof(data4));
+	SortCheck = Monotonically_Inc_Chk_GEN((uint_8*)&data4,sizeof(data4)) + SortCheck;
+
+	return (SortCheck == SORT_CHK_PASS_ID);
 }
