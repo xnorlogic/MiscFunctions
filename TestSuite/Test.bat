@@ -17,10 +17,10 @@ rem Compile and build
 %GCC_PATH%\gcc %OBJECT_FILES% -o %APPLICATION_NAME%.exe
 @echo Build Complete
 rem cleanup
-rm TestSuite.o
-rm MonotonicCheck.o
-rm CheckSumCalc.o
-rm Sort.o
+del TestSuite.o
+del MonotonicCheck.o
+del CheckSumCalc.o
+del Sort.o
 rem Test App execution
 @echo Perform Tests
 rem Run the executable
@@ -30,4 +30,4 @@ rem check for the test results
 IF %ERRORLEVEL% == 0 ( 
    echo Test suite completed and succeeded
 ) ELSE ( echo Test suite completed and failed )
-rm TestApp.exe
+del TestApp.exe
