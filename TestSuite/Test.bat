@@ -1,6 +1,6 @@
 cls
 echo off
-echo Test Suite for MiscFunctions has started...
+echo Test Suite for MiscFunctions has started!...
 rem Project architecture
 SET APPLICATION_NAME=TestApp
 SET FUNCTIONS_PATH=..\Functions
